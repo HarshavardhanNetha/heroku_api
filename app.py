@@ -20,7 +20,7 @@ def hello():
     code=str(request.args.get('code',default=""))
 
     if(param1=="" or param2==""):
-        return "Login Id/Password Error.<html><h7>You might have forgotten to enter parameters in the url</h7><h3>Use <i>moodlebot.haw.tf/?id=yourID&pwd=password&codes=E121,C212</i></h3><p>Make sure you replace yourID with your Campus ID, password with you moodle password and codes with your subject codes to submit atttendance for.</p><h2>Cheers!</h2><p>{}</p></html>".format(note)
+        return "Login Id/Password Error.<html><h7>You might have forgotten to enter parameters in the url</h7><p>{}</p></html>".format(note)
 
     headers={"user-agent":"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
     login_data={'username': param1, 'password': param2}
