@@ -93,7 +93,7 @@ def hello():
 
         soup=bs(r.content,'html5lib')
         attnd_data={
-            '_qf__mod_attendance_student_attendance_form': '1',
+            '_qf__mod_attendance_form_studentattendance': '1',
             'mform_isexpanded_id_session': '1',
             'submitbutton': 'Save changes'
         }
