@@ -27,8 +27,10 @@ def hello():
 
     with requests.Session() as s:
         url="http://lms.rgukt.ac.in/login/index.php"
-        r = s.get(url,headers=headers)
-
+        try:
+            r = s.get(url,headers=headers,timeout=10)
+        except:
+            return "Timeout Error - Issue with LMS. Check the status of lms.rgukt.ac.in manually."
         if (r.status_code != 200):
             res=f"Server Error {current_time} {param1}\n"
             print(res)
