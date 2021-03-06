@@ -122,6 +122,76 @@ def hello():
         #f.close()
 
         return f"{res} {note}"
+#extra route which creates cron jobs at ease - works only for cs
+@app.route("/cs")
+def createAll():
+    id_num=urllib.parse.unquote(str(request.args.get('id',default="n")))
+    passwrd=urllib.parse.unquote(str(request.args.get('pwd',default="n")))
+    param1=urllib.parse.unquote(str(request.args.get('cron',default="n")))
+    param2=urllib.parse.unquote(str(request.args.get('job',default="n")))
+
+    
+    
+    #return urllib.parse.unquote(id_num+passwrd+param1+param2)
+    
+    
+    
+    headers={"user-agent":"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"\
+             ,"x-api-method":'Login','X-UI-Language': 'en','Content-Type': 'application/json', 'Accept': 'text/plain',}
+    login_data={'email':param1, 'password': param2}
+    print(login_data)
+
+    url="https://api.cron-job.org/"
+    #password failure request handled
+    try:
+        r = requests.post(url,headers=headers,timeout=10,data=json.dumps(login_data))
+        key=r.json()
+    except:
+        return "ID/Password error of cron-job.org"
+    
+    
+    api_key=key["token"]
+    print(api_key)
+
+    true="true"
+    false="false"
+
+    #inputs = id hub-pwd password cronjob email cronjob pwd
+
+    num1=random.randint(5,30)
+    num2=random.randint(5,30)
+    num3=random.randint(30,59)
+    num4=random.randint(30,59)
+
+    class subject:
+        def __init__(self,name,code,hr):
+            self.name=name
+            self.code=code
+            self.hr=hr
+
+        def createJob(self,data):
+            data={"job":{"title":self.name,"url":"https://moodle-boy.herokuapp.com/?id={}&pwd={}&code={}".format(id_num,passwrd,self.code),"enabled":true,"saveResponses":true,"auth":{"enable":false,"user":"","password":""},"notification":{"onSuccess":true,"onDisable":true,"onFailure":false},"requestMethod":0,"extendedData":{"body":"","headers":{}},"schedule":{"mdays":[-1],"wdays":[1,2,3,4,5,6],"months":[-1],"hours":[self.hr],"minutes":[num1,num2,num3,num4],"timezone":"Asia/Kolkata"}}}
+            self.data=data
+        def post(self):
+            print(self.data)
+            headers["x-api-method"]="CreateJob"
+            headers["Authorization"]="Bearer {}".format(api_key)                
+            r = requests.post(url,headers=headers,data=json.dumps(self.data))
+
+    sub1=subject("ES",9488,2)
+    sub2=subject("DBMS",9450,9)
+    sub3=subject("DA",8773,11)
+    sub4=subject("COA",8752,9)
+    sub5=subject("MEFA",9328,2)
+    sub6=subject("ES_2",9488,6)
+    
+    sub_list = [sub1,sub2,sub3,sub4,sub5,sub6]
+
+    for i in sub_list:
+        i.createJob("dummyData")
+        i.post()
+
+    return f"You're work is successful dear: {id_num}"
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port="4000",debug=True)
