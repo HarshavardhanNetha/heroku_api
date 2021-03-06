@@ -4,7 +4,9 @@ from datetime import datetime
 from time import sleep
 import requests
 from bs4 import BeautifulSoup as bs
-import pytz 
+import pytz
+import random
+import urllib.parse
 
 app=Flask(__name__)
 @app.route('/')
