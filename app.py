@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 import pytz
 import json
+import _thread
 import random
 import urllib.parse
 
