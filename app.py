@@ -208,7 +208,7 @@ def createAll():
         return f"You're work is successful dear {id_num} <br> Job IDs: {res}"
     try:
         _thread.start_new_thread( new_thread, () )
-        return "Processing request - Logged in Successfully Check your <a href="https://console.cron-job.org/jobs">dashboard</a> in cron-job website"
+        return "Processing request - Logged in Successfully Check your <a href='https://console.cron-job.org/jobs'>dashboard</a> in cron-job website"
     except:
         return "Error starting new_thread. Contact support."
 
