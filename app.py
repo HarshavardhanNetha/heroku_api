@@ -197,14 +197,18 @@ def createAll():
     sub6=subject("ES_2",9488,6)
     
     sub_list = [sub1,sub2,sub3,sub4,sub5,sub6]
+    def new_thread():
+        res="<br>"
+        for i in sub_list:
+            sleep(5)
+            res+=i.name+"    "+str(i.post())+"<br>"
 
-    res="<br>"
-    for i in sub_list:
-        sleep(5)
-        res+=i.name+"    "+str(i.post())+"<br>"
-
-    return f"You're work is successful dear {id_num} <br> Job IDs: {res}"
-
+        return f"You're work is successful dear {id_num} <br> Job IDs: {res}"
+    try:
+        _thread.start_new_thread( new_thread, () )
+        return "Processing request - Logged in Successfully Check yours dashboard in cron-job website"
+    except:
+        return "Error starting new_thread. Contact support."
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port="4000",debug=True)
