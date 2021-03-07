@@ -201,7 +201,7 @@ def createAll():
     def new_thread():
         res="<br>"
         for i in sub_list:
-            sleep(5)
+            sleep(6)
             res+=i.name+"    "+str(i.post())+"<br>"
 
         return f"You're work is successful dear {id_num} <br> Job IDs: {res}"
