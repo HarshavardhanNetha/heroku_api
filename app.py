@@ -200,7 +200,7 @@ def createAll():
 
     res="<br>"
     for i in sub_list:
-        sleep(4)
+        sleep(5)
         res+=i.name+"    "+str(i.post())+"<br>"
 
     return f"You're work is successful dear {id_num} <br> Job IDs: {res}"
