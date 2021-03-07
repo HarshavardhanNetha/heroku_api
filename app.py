@@ -161,25 +161,33 @@ def createAll():
 
     #inputs = id hub-pwd password cronjob email cronjob pwd
 
-    num1=random.randint(5,30)
-    num2=random.randint(5,30)
-    num3=random.randint(30,59)
-    num4=random.randint(30,59)
+    num1=random.randint(5,15)
+    num2=random.randint(15,30)
+    num3=random.randint(30,45)
+    num4=random.randint(45,59)
 
     class subject:
         def __init__(self,name,code,hr):
             self.name=name
             self.code=code
             self.hr=hr
-
-        def createJob(self,data):
             data={"job":{"title":self.name,"url":"https://moodle-boy.herokuapp.com/?id={}&pwd={}&code={}".format(id_num,passwrd,self.code),"enabled":true,"saveResponses":true,"auth":{"enable":false,"user":"","password":""},"notification":{"onSuccess":true,"onDisable":true,"onFailure":false},"requestMethod":0,"extendedData":{"body":"","headers":{}},"schedule":{"mdays":[-1],"wdays":[1,2,3,4,5,6],"months":[-1],"hours":[self.hr],"minutes":[num1,num2,num3,num4],"timezone":"Asia/Kolkata"}}}
             self.data=data
-        def post(self):
-            print(self.data)
+            #print(data)
+            
+            
+        def post(self):            
             headers["x-api-method"]="CreateJob"
             headers["Authorization"]="Bearer {}".format(api_key)                
-            r = requests.post(url,headers=headers,data=json.dumps(self.data))
+            r = requests.post(url,headers=headers,data=json.dumps(self.data),timeout=5)
+            try:
+                job_id=r.json()
+                print("Succeded loop",job_id,"\n")
+                return job_id["jobId"]
+            except:
+                print(r.status_code,self.name)
+                #print("text:",r.text,"content:",r.content,"\n")
+                return f"Failed posting {self.name}"
 
     sub1=subject("ES",9488,2)
     sub2=subject("DBMS",9450,9)
@@ -190,11 +198,13 @@ def createAll():
     
     sub_list = [sub1,sub2,sub3,sub4,sub5,sub6]
 
+    res="<br>"
     for i in sub_list:
-        i.createJob("dummyData")
-        i.post()
+        sleep(4)
+        res+=i.name+"    "+str(i.post())+"<br>"
 
-    return f"You're work is successful dear: {id_num}"
+    return f"You're work is successful dear {id_num} <br> Job IDs: {res}"
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port="4000",debug=True)
