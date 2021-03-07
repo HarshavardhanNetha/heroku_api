@@ -189,7 +189,7 @@ def createAll():
                 print(r.status_code,self.name)
                 #print("text:",r.text,"content:",r.content,"\n")
                 return f"Failed posting {self.name}"
-
+    sleep(3)
     sub1=subject("ES",9488,2)
     sub2=subject("DBMS",9450,9)
     sub3=subject("DA",8773,11)
@@ -201,8 +201,9 @@ def createAll():
     def new_thread():
         res="<br>"
         for i in sub_list:
-            sleep(6)
+            sleep(4)
             res+=i.name+"    "+str(i.post())+"<br>"
+            sleep(4)
 
         return f"You're work is successful dear {id_num} <br> Job IDs: {res}"
     try:
