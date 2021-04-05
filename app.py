@@ -194,7 +194,7 @@ def createAll():
     sub2=subject("DBMS",9450,9)
     sub3=subject("DA",8773,11)
     sub4=subject("COA",8752,9)
-    sub5=subject("MEFA",9328,2)
+    sub5=subject("MEFA",12901,2)
     sub6=subject("ES_2",9488,6)
     
     sub_list = [sub1,sub2,sub3,sub4,sub5,sub6]
