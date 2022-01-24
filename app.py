@@ -10,8 +10,12 @@ import json
 import _thread
 import random
 import urllib.parse
+from flask_cors import CORS
+
 
 app=Flask(__name__)
+CORS(app)
+
 @app.route('/')
 def hello():
     #f=open("logs_all/logs_all_{}.txt".format(date.today()),"a")
