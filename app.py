@@ -367,9 +367,9 @@ def date_check():
 @app.route('/create_job')
 def create_job():
     id_num=urllib.parse.unquote(str(request.args.get('id',default="n")))
-    passwrd=urllib.parse.unquote(str(request.args.get('pwd',default="n")))
+    passwrd=str(request.args.get('pwd',default="n"))
     param1=urllib.parse.unquote(str(request.args.get('cron',default="n")))
-    param2=urllib.parse.unquote(str(request.args.get('job',default="n")))
+    param2=str(request.args.get('job',default="n"))
     
     #return urllib.parse.unquote(id_num+passwrd+param1+param2)
     
