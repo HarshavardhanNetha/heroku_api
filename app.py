@@ -372,7 +372,7 @@ def create_job():
     param2=str(request.args.get('job',default="n"))
     
     #return urllib.parse.unquote(id_num+passwrd+param1+param2)
-    
+    passwrd = urllib.parse.quote_plus(passwrd)
     
     
     headers={"user-agent":"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"\
