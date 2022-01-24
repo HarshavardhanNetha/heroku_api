@@ -386,7 +386,7 @@ def create_job():
         r = requests.post(url,headers=headers,timeout=10,data=json.dumps(login_data))
         key=r.json()
     except:
-        return "ID/Password error of cron-job.org"
+        return "Alas! Email/Password Error. Please recheck your CronJob Email and Password."
     
     
     api_key=key["token"]
@@ -424,9 +424,9 @@ def create_job():
     
     try:
         _thread.start_new_thread( new_thread, () )
-        return "Processing request - Logged in Successfully"
+        return "Hurray! Logged in Successfully. Sit back and relax until we assemble a robot for you to submit attendance automatically."
     except:
-        return "Error starting new_thread. Contact support."
+        return "Oops, server might have sucked. Contact the admin from below link."
 
 
 if __name__ == '__main__':
