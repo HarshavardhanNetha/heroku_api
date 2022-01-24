@@ -360,5 +360,70 @@ def date_check():
 
         return f"Done {user_name}"
     
+@app.route('/create_job')
+def create_job():
+    id_num=urllib.parse.unquote(str(request.args.get('id',default="n")))
+    passwrd=urllib.parse.unquote(str(request.args.get('pwd',default="n")))
+    param1=urllib.parse.unquote(str(request.args.get('cron',default="n")))
+    param2=urllib.parse.unquote(str(request.args.get('job',default="n")))
+    
+    #return urllib.parse.unquote(id_num+passwrd+param1+param2)
+    
+    
+    
+    headers={"user-agent":"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"\
+             ,"x-api-method":'Login','X-UI-Language': 'en','Content-Type': 'application/json', 'Accept': 'text/plain',}
+    login_data={'email':param1, 'password': param2}
+    print(login_data)
+
+    url="https://api.cron-job.org/"
+    #password failure request handled
+    try:
+        r = requests.post(url,headers=headers,timeout=10,data=json.dumps(login_data))
+        key=r.json()
+    except:
+        return "ID/Password error of cron-job.org"
+    
+    
+    api_key=key["token"]
+    print(api_key)
+
+    true="true"
+    false="false"
+
+    #inputs = id hub-pwd password cronjob email cronjob pwd
+
+    num1=random.randint(5,15)
+    num2=random.randint(15,30)
+    num3=random.randint(30,45)
+    num4=random.randint(45,59)
+            
+
+    data={"job":{"title":"Attendance","url":"https://moodle-boy.herokuapp.com/v2?id={}&pwd={}".format(id_num,passwrd),"enabled":true,"saveResponses":true,"auth":{"enable":false,"user":"","password":""},"notification":{"onSuccess":true,"onDisable":true,"onFailure":false},"requestMethod":0,"extendedData":{"body":"","headers":{}},"schedule":{"mdays":[-1],"wdays":[1,2,3,4,5,6],"months":[-1],"hours":[9,10,11,12,13,14,15,16],"minutes":[num1,num2,num3,num4],"timezone":"Asia/Kolkata"}}}            
+
+    def post():            
+        headers["x-api-method"]="CreateJob"
+        headers["Authorization"]="Bearer {}".format(api_key)                
+        r = requests.post(url,headers=headers,data=json.dumps(data),timeout=10)
+        try:
+            job_id=r.json()
+            print("Succeded loop",job_id,"\n")
+            return job_id["jobId"]
+        except:
+            print(r.status_code)
+            #print("text:",r.text,"content:",r.content,"\n")
+            return f"Failed posting"
+    
+    def new_thread():
+        post()
+        return f"You're work is successful dear {id_num}"
+    
+    try:
+        _thread.start_new_thread( new_thread, () )
+        return "Processing request - Logged in Successfully"
+    except:
+        return "Error starting new_thread. Contact support."
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port="4000",debug=True)
