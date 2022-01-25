@@ -16,7 +16,7 @@ from flask_cors import CORS
 app=Flask(__name__)
 CORS(app)
 
-@app.route('/')
+@app.route('/v1')
 def hello():
     #f=open("logs_all/logs_all_{}.txt".format(date.today()),"a")
     note="<h4>Thanks for using ~Harsha :)</h4><p>I don't save your passwords. DATA IS WEALTH.</p><h7>Queries or issues? Reach me out <a href=\"https://www.linkedin.com/in/harsha-netha\">here</a></h7>"
