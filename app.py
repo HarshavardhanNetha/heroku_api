@@ -360,9 +360,13 @@ def date_check():
             for i in check:
                 #print(i["href"])
                 try:
-                    _thread.start_new_thread(submit_att, (i["href"],))
-                    #print(f"Processing",i["href"])
-                    return f"Done {user_name}"
+                    temp_attendance = "attendance"
+                    if(temp_attendance in i["href"]):
+                        _thread.start_new_thread(submit_att, (i["href"],))
+                        #print(f"Processing",i["href"])
+                        return f"Done {user_name}"
+                    else:
+                        continue
                 except:
                     return f"Failed to start Thread Part 2"
                 
