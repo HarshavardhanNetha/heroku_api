@@ -367,7 +367,7 @@ def date_check():
                 
         try:
             _thread.start_new_thread(second_part, ())
-            return f"Done {user_name}"
+            return f"Done Final Thread"
         except:
             return f"Thread failed to start"
 @app.route('/create_job')
