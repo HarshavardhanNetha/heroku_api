@@ -259,10 +259,10 @@ def date_check():
             return f"{res} {note}"
 
         for x in check:
-            print(x.find('a')['href'])
+            #print(x.find('a')['href'])
             url=x.find('a')['href']
             #print(url)
-            print(x.find('a').contents[0])
+            #print(x.find('a').contents[0])
         r = s.get(url,headers=headers)
 
         if (r.status_code != 200):
@@ -333,37 +333,43 @@ def date_check():
             #f.write(res)
             return f"{res} {note}"
 
+        def second_part():
+            sub_link_pre='http://lms.rgukt.ac.in/calendar/view.php?view=day&time='
+            sub_links=code
 
-        sub_link_pre='http://lms.rgukt.ac.in/calendar/view.php?view=day&time='
-        sub_links=code
-        
-        url=sub_link_pre+str(sub_links)
-        print(url)
-        
-        r = s.get(url,headers=headers)
+            url=sub_link_pre+str(sub_links)
+            #print(url)
 
-        if (r.status_code != 200):
-            print("Error")
-            res=f"Server Error - AttendancePage {current_time} {param1}\n"
-            #f.write(res)
-            return f"{res} {note}"
-            
-        soup=bs(r.content,'html5lib')
-        user_name=soup.find('a', attrs={'title':'View profile'}).contents[0]
+            r = s.get(url,headers=headers)
+
+            if (r.status_code != 200):
+                print("Error")
+                res=f"Server Error - AttendancePage {current_time} {param1}\n"
+                #f.write(res)
+                return f"{res} {note}"
+
+            soup=bs(r.content,'html5lib')
+            user_name=soup.find('a', attrs={'title':'View profile'}).contents[0]
 
 
-        check=soup.findAll('a', attrs={'class':'card-link'})
+            check=soup.findAll('a', attrs={'class':'card-link'})
 
-        print(check)
+            #print(check)
 
-        for i in check:
-            print(i["href"])
-
-            _thread.start_new_thread(submit_att, (i["href"],))
-            print(f"Processing",i["href"])
-
-        return f"Done {user_name}"
-    
+            for i in check:
+                #print(i["href"])
+                try:
+                    _thread.start_new_thread(submit_att, (i["href"],))
+                    #print(f"Processing",i["href"])
+                    return f"Done {user_name}"
+                except:
+                    return f"Failed to start Thread Part 2"
+                
+        try:
+            _thread.start_new_thread(second_part, ())
+            return f"Done {user_name}"
+        except:
+            return f"Thread failed to start"
 @app.route('/create_job')
 def create_job():
     id_num=urllib.parse.unquote(str(request.args.get('id',default="n")))
