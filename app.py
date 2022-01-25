@@ -332,7 +332,8 @@ def date_check():
             res=f"ID/Password Error {current_time} {param1}\n"
             #f.write(res)
             return f"{res} {note}"
-
+        user_name=soup.find('a', attrs={'title':'View profile'}).contents[0]
+        
         def second_part():
             sub_link_pre='http://lms.rgukt.ac.in/calendar/view.php?view=day&time='
             sub_links=code
@@ -349,7 +350,7 @@ def date_check():
                 return f"{res} {note}"
 
             soup=bs(r.content,'html5lib')
-            user_name=soup.find('a', attrs={'title':'View profile'}).contents[0]
+            
 
 
             check=soup.findAll('a', attrs={'class':'card-link'})
