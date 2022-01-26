@@ -364,7 +364,7 @@ def date_check():
                     if(temp_attendance in i["href"]):
                         _thread.start_new_thread(submit_att, (i["href"],))
                         #print(f"Processing",i["href"])
-                        return f"Done {user_name}"
+                        #return f"Done {user_name}"
                     else:
                         continue
                 except:
