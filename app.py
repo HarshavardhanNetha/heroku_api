@@ -216,8 +216,21 @@ def createAll():
         return "Processing request - Logged in Successfully Check your <a href='https://console.cron-job.org/jobs'>dashboard</a> in cron-job website"
     except:
         return "Error starting new_thread. Contact support."
-    
-@app.route('/v2')
+
+@app.route('v2')
+def threader():
+    headers={"user-agent":"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"\
+             ,"x-api-method":'Login','X-UI-Language': 'en','Content-Type': 'application/json', 'Accept': 'text/plain',}
+    param1=str(request.args.get('id',default=""))
+    param2=str(request.args.get('pwd',default=""))
+    url = f"https://moodle-boy.herokuapp.com/v3?id={param1}&pwd={param2}"
+    try:
+        r = requests.get(url = url, headers = headers, timeout = 30)
+        return "Request Sent"
+    except:
+        return "Error request"
+
+@app.route('/v3')
 def date_check():
     #f=open("logs_all/logs_all_{}.txt".format(date.today()),"a")
     note="<h4>Thanks for using ~Harsha :)</h4><p>I don't save your passwords. DATA IS WEALTH.</p><h7>Queries or issues? Reach me out <a href=\"https://www.linkedin.com/in/harsha-netha\">here</a></h7>"
