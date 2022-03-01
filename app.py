@@ -217,15 +217,20 @@ def createAll():
     except:
         return "Error starting new_thread. Contact support."
 
-@app.route('v2')
+@app.route('/v2')
 def threader():
     headers={"user-agent":"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"\
              ,"x-api-method":'Login','X-UI-Language': 'en','Content-Type': 'application/json', 'Accept': 'text/plain',}
     param1=str(request.args.get('id',default=""))
     param2=str(request.args.get('pwd',default=""))
     url = f"https://moodle-boy.herokuapp.com/v3?id={param1}&pwd={param2}"
-    try:
+    
+    def request_thread():
         r = requests.get(url = url, headers = headers, timeout = 30)
+        return "Done"
+    
+    try:
+        _thread.start_new_thread(request_thread, ())
         return "Request Sent"
     except:
         return "Error request"
